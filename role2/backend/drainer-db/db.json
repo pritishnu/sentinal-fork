@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "entries": [
+    {
+      "id": "sentinel-demo-fake-rewards",
+      "label": "Demo fake rewards approval drainer",
+      "chain_id": 11155111,
+      "addresses": ["0x251a5db73994b8127821d6d9d83b29e7c9604697"],
+      "selectors": ["0xef5cfb8c"],
+      "bytecode_hashes": [],
+      "severity": "critical",
+      "source": "project demo contract"
+    }
+  ]
+}

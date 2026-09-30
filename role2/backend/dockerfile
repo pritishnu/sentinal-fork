@@ -1,0 +1,43 @@
+# ---------- Build stage ----------
+FROM rust:1.88-bookworm AS builder
+
+WORKDIR /app
+
+# Copy dependency manifests first for better Docker caching
+COPY Cargo.toml Cargo.lock ./
+
+# Create a dummy source so dependencies can be compiled/cached
+RUN mkdir -p src && echo "fn main() {}" > src/main.rs
+
+RUN cargo build --release
+
+# Remove dummy source/build artifacts
+RUN rm -rf src
+
+# Copy the actual source code
+COPY src ./src
+
+# Build the actual application
+RUN cargo build --release
+
+
+# ---------- Runtime stage ----------
+FROM debian:bookworm-slim
+
+WORKDIR /app
+
+# Install required runtime libraries
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy compiled application
+COPY --from=builder /app/target/release/ /app/
+
+# Render provides the PORT environment variable
+ENV PORT=10000
+
+EXPOSE 10000
+
+# Start the application
+CMD ["sh", "-c", "exec $(find /app -maxdepth 1 -type f -executable | head -n 1)"]

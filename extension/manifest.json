@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Sentinel Fork",
+  "description": "Pause, simulate, and review Ethereum wallet requests before they reach MetaMask.",
+  "version": "0.4.2",
+  "minimum_chrome_version": "111",
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "http://127.0.0.1:8787/*",
+    "http://localhost:8787/*"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_title": "Sentinel Fork",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["src/page-interceptor.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ]
+}

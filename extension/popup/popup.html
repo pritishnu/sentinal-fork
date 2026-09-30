@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sentinel Fork</title>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <main>
+      <header class="topbar">
+        <div class="brand"><span class="brand-mark" aria-hidden="true">S</span><div><p class="eyebrow">SENTINEL FORK</p><h1>Wallet review</h1></div></div>
+        <label class="switch" title="Enable wallet request review">
+          <input id="enabled" type="checkbox" aria-label="Enable wallet request review">
+          <span class="track"></span>
+        </label>
+      </header>
+
+      <section id="verdict" class="verdict neutral" aria-live="polite">
+        <div class="verdict-top"><span id="flag-icon" class="flag-icon" aria-hidden="true">—</span><span id="flag-label" class="flag-label">NO SCAN</span></div>
+        <h2 id="verdict-title">No recent scan on this tab</h2>
+        <p id="verdict-summary">A risk flag appears here after a wallet request from this tab is analyzed.</p>
+        <p id="verdict-meta" class="verdict-meta"></p>
+      </section>
+
+      <section id="report" class="report" hidden>
+        <div class="report-row"><span>Request</span><strong id="report-intent"></strong></div>
+        <div class="report-row"><span>Risk score</span><strong id="report-score"></strong></div>
+        <div class="report-row"><span>Decision</span><strong id="report-decision"></strong></div>
+      </section>
+
+      <div class="status-line"><span id="engine-status">Checking analysis engine…</span><button id="retry" type="button">Retry</button></div>
+      <p id="enabled-note" class="footnote">Review is enabled. Sentinel asks before forwarding supported requests to MetaMask. A flag is for one request, not a site-wide safety rating.</p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>
